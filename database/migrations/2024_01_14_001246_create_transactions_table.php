@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 28, 8);
+            $table->decimal('charge', 28, 8)->default(0.00000000);
+            $table->decimal('post_balace', 28, 8);
+            $table->string('trx_type', length: 20);
+            $table->string('wallet', length: 30);
+            $table->longText('details');
+            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
             $table->timestamps();
         });
     }
