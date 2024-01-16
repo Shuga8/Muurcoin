@@ -58,14 +58,13 @@ class AuthController extends Controller
 
             dispatch(new SignUpMailJob($user));
 
+            DB::commit();
+
             return $this->success([
                 'user' => $user,
                 'token' => $user->createToken('API token of ' . $request->username)->plainTextToken
             ]);
-
-            DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
             DB::rollBack();
 
             return $this->error('', throw $th, 401);
@@ -80,6 +79,8 @@ class AuthController extends Controller
             'message' => 'you have successfully logged out.'
         ]);
     }
+
+    /* Email verification */
 
     public function notice()
     {
@@ -117,4 +118,6 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Verification link resent']);
     }
+
+    /* Password Reset */
 }

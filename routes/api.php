@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 });
  */
 
+/* Contain auth methods like [login, register, logout, verification email, passwords reset] */
+
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -18,6 +20,8 @@ Route::prefix('auth')->group(function () {
     Route::get('/email/verify-notice', [AuthController::class, 'notice'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verify'])->name('verification.verify');
     Route::post('/email/resend', [AuthController::class, 'resend'])->name('verification.resend');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 });
 
 Route::middleware('auth:sanctum', 'verified')->group(function () {
