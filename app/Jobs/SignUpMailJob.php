@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,11 +14,15 @@ class SignUpMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $user;
+
     /**
      * Create a new job instance.
      */
-    public function __construct(public $mail)
+
+    public function __construct(User $user)
     {
+        $this->user = $user;
     }
 
     /**
@@ -25,5 +30,6 @@ class SignUpMailJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $this->user->sendEmailVerificationNotification();
     }
 }
