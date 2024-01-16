@@ -21,7 +21,11 @@ Route::prefix('auth')->group(function () {
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verify'])->name('verification.verify');
     Route::post('/email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
-    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    Route::get('/reset-password/{token}', function (Request $request, string $token) {
+        $email = $request->query('email');
+        return response()->json(['token' => $token, 'email' => $email]);
+    })->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
 Route::middleware('auth:sanctum', 'verified')->group(function () {
