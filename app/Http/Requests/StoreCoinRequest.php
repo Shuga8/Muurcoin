@@ -11,7 +11,7 @@ class StoreCoinRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class StoreCoinRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'unique:coins'],
-            'symbol'  => ['required', 'string', 'unique:coins'],
+            'symbol'  => ['required', 'string', 'unique:coins']
         ];
     }
 }

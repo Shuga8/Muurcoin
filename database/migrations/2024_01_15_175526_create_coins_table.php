@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('coins', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('sybmol');
+            $table->string('symbol');
             $table->longText('logo')->nullable();
             $table->timestamps();
         });

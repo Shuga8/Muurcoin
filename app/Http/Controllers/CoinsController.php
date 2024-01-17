@@ -18,6 +18,8 @@ class CoinsController extends Controller
      */
     public function index()
     {
+
+        return response()->json('Working');
         CoinsResource::collection(
             Coin::paginate(10)
         );
