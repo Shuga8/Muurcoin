@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCoinRequest;
+use App\Models\Coin;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\CoinsResource;
 
 class CoinsController extends Controller
 {
+
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json('Test');
+        CoinsResource::collection(
+            Coin::paginate(10)
+        );
     }
 
     /**
@@ -25,9 +34,22 @@ class CoinsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCoinRequest $request)
     {
-        //
+        $request->validated($request->all());
+
+        return $this->success([
+            'response' => 'Request Validated'
+        ]);
+
+        try {
+
+            DB::beginTransaction();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return $this->error('', throw $th, 401);
+        }
     }
 
     /**
