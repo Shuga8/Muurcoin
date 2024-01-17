@@ -22,8 +22,8 @@ class StoreCoinRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-
+            'name' => ['required', 'string', 'unique:coins'],
+            'symbol'  => ['required', 'string', 'unique:coins'],
         ];
     }
 }
