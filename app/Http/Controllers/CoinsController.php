@@ -40,13 +40,27 @@ class CoinsController extends Controller
     {
         $request->validated($request->all());
 
-        return $this->success([
-            'response' => 'Request Validated'
-        ]);
+        $data = [
+            'name' => $request->name,
+            'symbol' => $request->symbol,
+        ];
+
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('coins', 'public');
+        } else {
+            return $this->error('', 'You must upload a image for the coin logo', 401);
+        }
 
         try {
 
             DB::beginTransaction();
+
+            Coin::create($data);
+
+            DB::commit();
+            return $this->success([
+                'response' => $data['name'] . ' coin successfully created'
+            ]);
         } catch (\Throwable $th) {
 
             DB::rollBack();
