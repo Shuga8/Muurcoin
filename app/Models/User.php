@@ -13,7 +13,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
+    /** 
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
