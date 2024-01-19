@@ -15,7 +15,12 @@ class CoinsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => (string) $this->id
+            'id' => (string) $this->id,
+            'data' => [
+                'name' => (string) $this->name,
+                'symbol' => (string) $this->symbol,
+                'logo' => (string) asset('storage/' . $this->logo)
+            ]
         ];
     }
 }
