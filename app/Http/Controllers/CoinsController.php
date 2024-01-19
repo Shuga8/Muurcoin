@@ -37,8 +37,6 @@ class CoinsController extends Controller
     public function store(StoreCoinRequest $request)
     {
 
-        return $this->error('', 'Unauthorized', 403);
-
         $request->validated($request->all());
 
         $data = [
