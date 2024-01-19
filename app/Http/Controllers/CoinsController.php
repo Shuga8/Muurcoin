@@ -36,6 +36,9 @@ class CoinsController extends Controller
      */
     public function store(StoreCoinRequest $request)
     {
+
+        return $this->error('', 'Unauthorized', 403);
+
         $request->validated($request->all());
 
         $data = [
@@ -69,9 +72,12 @@ class CoinsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $symbol)
     {
-        //
+
+        return CoinsResource::collection(
+            Coin::where('symbol', $symbol)->get()
+        );
     }
 
     /**
@@ -87,14 +93,12 @@ class CoinsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Coin $coin)
     {
-        //
     }
 }

@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('exchanges', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->decimal('amount', 28, 8);
+            $table->decimal('charge', 28, 8)->default(0.00000000);
+            $table->string('from_wallet', length: 30);
+            $table->string('to_wallet', length: 30);
+            $table->longText('details');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

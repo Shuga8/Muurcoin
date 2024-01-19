@@ -16,7 +16,7 @@ class CoinsResource extends JsonResource
     {
         return [
             'id' => (string) $this->id,
-            'data' => [
+            'attributes' => [
                 'name' => (string) $this->name,
                 'symbol' => (string) $this->symbol,
                 'logo' => (string) asset('storage/' . $this->logo)
