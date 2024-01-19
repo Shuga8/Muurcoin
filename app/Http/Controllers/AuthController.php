@@ -66,7 +66,6 @@ class AuthController extends Controller
 
             return $this->success([
                 'user' => $user,
-                'token' => $user->createToken('API token of ' . $request->username, ['*'], now()->addMinutes(1440))->plainTextToken
             ]);
         } catch (\Throwable $th) {
             DB::rollBack();
