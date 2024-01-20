@@ -22,7 +22,7 @@ class StoreExchangeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => ['required', 'double'],
+            'amount' => ['required', 'numeric'],
             'from' => ['required', 'string'],
             'to' => ['required', 'string']
         ];

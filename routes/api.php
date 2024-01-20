@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CoinsController;
-use App\Http\Controllers\TransactionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CoinsController;
+use App\Http\Controllers\ExchangeController;
+use App\Http\Controllers\TransactionsController;
 
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -33,7 +34,7 @@ Route::middleware('auth:sanctum', 'verified')->group(function () {
     Route::resource('/transactions', TransactionsController::class);
     Route::resource('/coins', CoinsController::class);
 
-    Route::controller('ExchangeCryptoController')->prefix('exchange')->name('api.exchange.')->group(function () {
-        Route::post('/', 'store')->name('store');
+    Route::prefix('exchange')->name('api.exchange.')->group(function () {
+        Route::post('/', [ExchangeController::class,  'store'])->name('store');
     });
 });
