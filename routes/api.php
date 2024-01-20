@@ -32,4 +32,8 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum', 'verified')->group(function () {
     Route::resource('/transactions', TransactionsController::class);
     Route::resource('/coins', CoinsController::class);
+
+    Route::controller('ExchangeCryptoController')->prefix('exchange')->name('api.exchange.')->group(function () {
+        Route::post('/', 'store')->name('store');
+    });
 });
