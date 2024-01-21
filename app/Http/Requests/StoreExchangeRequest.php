@@ -24,7 +24,8 @@ class StoreExchangeRequest extends FormRequest
         return [
             'amount' => ['required', 'numeric'],
             'from' => ['required', 'string'],
-            'to' => ['required', 'string']
+            'to' => ['required', 'string'],
+            'type' => ['required', 'string']
         ];
     }
 }
