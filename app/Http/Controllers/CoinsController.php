@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCoinRequest;
 use App\Models\Coin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\CoinsResource;
+use App\Http\Requests\StoreCoinRequest;
 
 class CoinsController extends Controller
 {
@@ -50,9 +52,35 @@ class CoinsController extends Controller
             return $this->error('', 'You must upload a image for the coin logo', 401);
         }
 
+        $user = User::where('id', Auth::user()->id)->first();
+
+        $personal_coins = $user->personal_coins_balance;
+
         try {
 
             DB::beginTransaction();
+
+
+            if ($personal_coins == null || count((array) json_decode($personal_coins)) == 0 || $personal_coins == '{}') {
+                $personal_coins = [];
+                $personal_coins[$data['symbol']]  = 0;
+                $personal_coins = json_encode($personal_coins);
+                $user->personal_coins_balance = $personal_coins;
+                $user->save();
+            } else {
+
+                $personal_coins = json_decode($personal_coins);
+
+                $personal_coins = (array) $personal_coins;
+
+                if (!array_key_exists($data['symbol'], $personal_coins)) {
+                    $personal_coins[$data['symbol']] = 0;
+                    $personal_coins = json_encode($personal_coins);
+                    $user->personal_coins_balance = $personal_coins;
+                    $user->save();
+                }
+            }
+
 
             Coin::create($data);
 
@@ -97,6 +125,10 @@ class CoinsController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Coin $coin)
+    {
+    }
+
+    public function addCoinToPersonalCoinsBalance()
     {
     }
 }

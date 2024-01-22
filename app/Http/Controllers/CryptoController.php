@@ -19,7 +19,7 @@ class CryptoController extends Controller
         $balance = json_decode($balance);
 
         return $this->success([
-            'balance' => $balance
+            'currencies' => $balance
         ], Auth::user()->username . "'s crypto currencies");
     }
 }
