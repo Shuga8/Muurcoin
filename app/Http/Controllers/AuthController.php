@@ -36,9 +36,8 @@ class AuthController extends Controller
 
 
         return $this->success([
-            'user' => $user,
             'token' => $user->createToken('API token of ' . $user->username, ['*'], now()->addMinutes(1440))->plainTextToken
-        ]);
+        ], 'You have logged in successfully');
     }
 
     public function register(StoreUserRequest $request)
