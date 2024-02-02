@@ -16,7 +16,14 @@ class TransactionResource extends JsonResource
     {
         return [
             'id' => (string) $this->id,
-            'user_id' => (string) $this->user_id,
+            'reference_id' => (string) $this->reference_id,
+            'amount' => (float) $this->amount,
+            'charge' => (float) $this->charge,
+            'wallet' => (string) $this->wallet,
+            'trx_type' => (string) $this->trx_type,
+            'post_balance' => (float) $this->post_balance,
+            'details' => (string) $this->details,
+            'status' => (string) $this->status
         ];
     }
 }
