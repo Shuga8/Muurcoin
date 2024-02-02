@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CoinsController;
 use App\Http\Controllers\CryptoController;
+use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UserController;
@@ -33,13 +34,19 @@ Route::prefix('auth')->group(function () {
 
 
 Route::middleware('auth:sanctum', 'verified')->group(function () {
-    Route::resource('/user', UserController::class);
-    Route::resource('/transactions', TransactionsController::class);
-    Route::resource('/coins', CoinsController::class);
+    Route::name('api.')->group(function () {
+        Route::resource('/user', UserController::class);
+        Route::resource('/transactions', TransactionsController::class);
+        Route::resource('/coins', CoinsController::class);
+    });
+
     Route::prefix('exchange')->name('api.exchange.')->group(function () {
         Route::post('/', [ExchangeController::class,  'store'])->name('store');
     });
     Route::prefix('/crypto')->name('api.crypto.')->group(function () {
         Route::get('/', [CryptoController::class, 'index'])->name('index');
+    });
+    Route::prefix('/deposit')->name('api.deposit.')->group(function () {
+        Route::post('/', [DepositController::class, 'achieve'])->name('achieve');
     });
 });
