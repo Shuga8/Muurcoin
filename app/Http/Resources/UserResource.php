@@ -24,8 +24,8 @@ class UserResource extends JsonResource
             'balance' => $this->balance,
             'personal_coins_balance' => $this->personal_coins_balance,
             'wallet_address' => $this->wallet_address,
-            'status' => $this->status,
-            'two_factor_activated' => $this->wallet_factor_activated,
+            'status' => (string) $this->status,
+            'two_factor_activated' => (int) $this->wallet_factor_activated,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
