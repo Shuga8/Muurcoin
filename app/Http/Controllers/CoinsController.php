@@ -66,8 +66,6 @@ class CoinsController extends Controller
             return $this->error(null, 'Asset already exists', 406);
         }
 
-        return $this->success(null, 'does not exists');
-
         try {
 
             DB::beginTransaction();
@@ -78,6 +76,7 @@ class CoinsController extends Controller
                 $personal_coins[$data['symbol']]  = 0;
                 $personal_coins = json_encode($personal_coins);
                 $user->personal_coins_balance = $personal_coins;
+                $balance[$data['symbol']] = 0;
                 $user->save();
             } else {
 
@@ -89,6 +88,7 @@ class CoinsController extends Controller
                     $personal_coins[$data['symbol']] = 0;
                     $personal_coins = json_encode($personal_coins);
                     $user->personal_coins_balance = $personal_coins;
+                    $balance[$data['symbol']] = 0;
                     $user->save();
                 }
             }
