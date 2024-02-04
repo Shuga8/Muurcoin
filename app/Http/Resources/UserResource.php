@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'phone_number' => (string) $this->country_code . '' . $this->mobile,
             'balance' => $this->balance,
             'personal_coins_balance' => $this->personal_coins_balance,
-            'wallet_address' => $this->wallet_address,
+            'wallet_address' => json_decode($this->wallet_address),
             'status' => (string) $this->status,
             'two_factor_activated' => (int) $this->wallet_factor_activated,
             'created_at' => $this->created_at,
