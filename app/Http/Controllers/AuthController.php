@@ -64,7 +64,7 @@ class AuthController extends Controller
 
             return $this->success([
                 'user' => $user,
-            ]);
+            ], 'Registration successfull');
         } catch (\Throwable $th) {
             DB::rollBack();
 
