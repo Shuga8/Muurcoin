@@ -77,6 +77,7 @@ class CoinsController extends Controller
                 $personal_coins = json_encode($personal_coins);
                 $user->personal_coins_balance = $personal_coins;
                 $balance[$data['symbol']] = 0;
+                $user->balance = json_encode($balance);
                 $user->save();
             } else {
 
@@ -89,6 +90,7 @@ class CoinsController extends Controller
                     $personal_coins = json_encode($personal_coins);
                     $user->personal_coins_balance = $personal_coins;
                     $balance[$data['symbol']] = 0;
+                    $user->balance = json_encode($balance);
                     $user->save();
                 }
             }
