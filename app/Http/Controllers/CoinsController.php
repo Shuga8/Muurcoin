@@ -56,6 +56,14 @@ class CoinsController extends Controller
 
         $personal_coins = $user->personal_coins_balance;
 
+        $data['name'] = strtoupper($data['name']);
+
+        $data['symbol'] = strtoupper($data['symbol']);
+
+        $balance = json_decode($user->balance, true);
+
+        return $this->success([$balance], 'continue');
+
         try {
 
             DB::beginTransaction();
