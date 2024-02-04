@@ -97,9 +97,7 @@ class CoinsController extends Controller
             Coin::create($data);
 
             DB::commit();
-            return $this->success([
-                'response' => $data['name'] . ' coin successfully created'
-            ]);
+            return $this->success(null,  $data['name'] . ' coin successfully created');
         } catch (\Throwable $th) {
 
             DB::rollBack();
