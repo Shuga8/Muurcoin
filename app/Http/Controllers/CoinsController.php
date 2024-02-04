@@ -60,9 +60,13 @@ class CoinsController extends Controller
 
         $data['symbol'] = strtoupper($data['symbol']);
 
-        $balance = json_decode($user->balance, true);
+        $balance = (array) json_decode($user->balance, true);
 
-        return $this->success([$balance], 'continue');
+        if (array_key_exists($data['symbol'], $balance)) {
+            return $this->error(null, 'Asset already exists', 406);
+        }
+
+        return $this->success(null, 'does not exists');
 
         try {
 
