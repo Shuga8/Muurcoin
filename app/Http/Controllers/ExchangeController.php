@@ -49,12 +49,14 @@ class ExchangeController extends Controller
         $api = new Api();
 
         /* Coin equivalents */
+        $fromSymbolUsdEquivalent = null;
+        $toSymbolUsdEquivalent = null;
 
-        try {
+        if (!$this->checkIfSymbolAPersonalCoin($fromSymbol)) {
             $fromSymbolUsdEquivalent = $api->fetchSymbolPriceUsd($fromSymbol);
+        }
+        if (!$this->checkIfSymbolAPersonalCoin($toSymbol)) {
             $toSymbolUsdEquivalent   = $api->fetchSymbolPriceUsd($toSymbol);
-        } catch (\Throwable $th) {
-            return $this->error(null, $th->getMessage(), $th->getCode() ?: 406);
         }
 
         /* User */
