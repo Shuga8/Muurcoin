@@ -64,6 +64,7 @@ class ExchangeController extends Controller
 
         /* If amount is greater than the amount present in the  user balance of the $fromSymol */
 
+        return $this->success((array) json_decode(Auth::user()->personal_coins_balance));
         if ($amount > (float) $balance->$fromSymbol) {
             return $this->error('', 'Insufficient Balance', 409);
         }
