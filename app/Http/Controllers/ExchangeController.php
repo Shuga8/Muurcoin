@@ -68,6 +68,15 @@ class ExchangeController extends Controller
             return $this->error('', 'Insufficient Balance', 409);
         }
 
+        if ($this->checkIfSymbolAPersonalCoin($fromSymbol)) {
+            return $this->success(null, 'From is a personal coin', 409);
+        }
+
+        if ($this->checkIfSymbolAPersonalCoin($toSymbol)) {
+            return $this->error(null, 'To is a personal coin', 409);
+        }
+
+        return $this->success(null, 'Npne are not a personal coin');
         /* Convert Amount from $fromSymbol to USD*/
         $usdEquivalentAmountOfExchangeAmountOfFromSymbol = $amount * (float) $fromSymbolUsdEquivalent;
 
@@ -143,6 +152,21 @@ class ExchangeController extends Controller
             throw new \Exception("$symbol not acceptable", 406);
         } else {
             return true;
+        }
+    }
+
+    public function checkIfSymbolAPersonalCoin($symbol)
+    {
+        $balance = Auth::user()->personal_coins_balance;
+
+        $balance = json_decode($balance);
+
+        $balance = (array) $balance;
+
+        if (array_key_exists($symbol, $balance)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
