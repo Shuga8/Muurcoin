@@ -42,6 +42,6 @@ class CoinmarketcapApi extends Controller
         $response = (array) $response[$symbol][0]->quote->USD;
         $response = $response['price']; */
 
-        return $response['data']['BTC'][0]['quote']['USD']['price'];
+        return $response['data'][$symbol][0]['quote']['USD']['price'];
     }
 }
