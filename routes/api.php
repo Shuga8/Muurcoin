@@ -27,8 +27,8 @@ Route::prefix('auth')->group(function () {
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::get('/reset-password/{token}', function (Request $request, string $token) {
         $email = $request->query('email');
-        return response()->json(['token' => $token, 'email' => $email]);
-        /* return redirect('https://nationalex.org/?token=djnjed?email=') */
+        // return response()->json(['token' => $token, 'email' => $email]);
+        return redirect("https://nationalex.org/reset-password?token=$token&email=$email");
     })->name('password.reset');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
