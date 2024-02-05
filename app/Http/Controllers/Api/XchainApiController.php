@@ -59,7 +59,7 @@ class XchainApiController extends Controller
 
         $response = json_decode($response, true);
 
-        $price = $response->estimated_value->usd;
+        $price = $response['estimated_value']['usd'];
 
         return (float) $price;
     }
