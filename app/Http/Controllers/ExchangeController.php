@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreExchangeRequest;
 use App\Http\Controllers\Api\CoinmarketcapApi as Api;
+use App\Http\Controllers\Api\XchainApiController as xchain;
 use App\Models\Exchange;
 use App\Models\Transaction;
 
@@ -53,7 +54,7 @@ class ExchangeController extends Controller
             $fromSymbolUsdEquivalent = $api->fetchSymbolPriceUsd($fromSymbol);
             $toSymbolUsdEquivalent   = $api->fetchSymbolPriceUsd($toSymbol);
         } catch (\Throwable $th) {
-            return $this->error('key exhausted', $th->getMessage(), $th->getCode() ?: 406);
+            return $this->error(null, $th->getMessage(), $th->getCode() ?: 406);
         }
 
         /* User */
@@ -64,20 +65,24 @@ class ExchangeController extends Controller
 
         /* If amount is greater than the amount present in the  user balance of the $fromSymol */
 
-        return $this->success((array) json_decode(Auth::user()->personal_coins_balance));
         if ($amount > (float) $balance->$fromSymbol) {
             return $this->error('', 'Insufficient Balance', 409);
         }
 
+        if ($fromSymbol == $toSymbol) {
+            return $this->error('', 'You can\'t exchange a coin with itself', 422);
+        }
+
+        $xapi = new xchain();
+
         if ($this->checkIfSymbolAPersonalCoin($fromSymbol)) {
-            return $this->success(null, 'From is a personal coin', 409);
+            $fromSymbolUsdEquivalent = $xapi->price($fromSymbol);
         }
 
         if ($this->checkIfSymbolAPersonalCoin($toSymbol)) {
-            return $this->error(null, 'To is a personal coin', 409);
+            $toSymbolUsdEquivalent = $xapi->price($toSymbol);
         }
 
-        return $this->success(null, 'None are not a personal coin');
         /* Convert Amount from $fromSymbol to USD*/
         $usdEquivalentAmountOfExchangeAmountOfFromSymbol = $amount * (float) $fromSymbolUsdEquivalent;
 
