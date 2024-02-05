@@ -53,7 +53,7 @@ class ExchangeController extends Controller
             $fromSymbolUsdEquivalent = $api->fetchSymbolPriceUsd($fromSymbol);
             $toSymbolUsdEquivalent   = $api->fetchSymbolPriceUsd($toSymbol);
         } catch (\Throwable $th) {
-            return $this->error('', $th->getMessage(), $th->getCode() ?: 406);
+            return $this->error('key exhausted', $th->getMessage(), $th->getCode() ?: 406);
         }
 
         /* User */
