@@ -64,19 +64,23 @@ class ExchangeController extends Controller
 
         /* If amount is greater than the amount present in the  user balance of the $fromSymol */
 
-        if ($amount > (float) $balance->$fromSymbol) {
-            return $this->error('', 'Insufficient Balance', 409);
-        }
+        try {
+            if ($amount > (float) $balance->$fromSymbol) {
+                return $this->error('', 'Insufficient Balance', 409);
+            }
 
-        if ($this->checkIfSymbolAPersonalCoin($fromSymbol)) {
-            return $this->success(null, 'From is a personal coin', 409);
+            if ($this->checkIfSymbolAPersonalCoin($fromSymbol)) {
+                return $this->success(null, 'From is a personal coin', 409);
+            }
+        } catch (\Throwable $th) {
+            return $this->error('Error Occurred while checking your balance. Please Try again later', $th->getMessage(), $th->getCode() ?: 409);
         }
 
         if ($this->checkIfSymbolAPersonalCoin($toSymbol)) {
             return $this->error(null, 'To is a personal coin', 409);
         }
 
-        return $this->success(null, 'Npne are not a personal coin');
+        return $this->success(null, 'None are not a personal coin');
         /* Convert Amount from $fromSymbol to USD*/
         $usdEquivalentAmountOfExchangeAmountOfFromSymbol = $amount * (float) $fromSymbolUsdEquivalent;
 
