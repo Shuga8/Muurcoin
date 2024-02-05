@@ -37,11 +37,11 @@ class CoinmarketcapApi extends Controller
 
         curl_close($curl);
 
-        $response = (array) json_decode($response);
-        $response = (array) $response['data'];
+        $response =  json_decode($response, true);
+        /* $response = (array) $response['data'];
         $response = (array) $response[$symbol][0]->quote->USD;
-        $response = $response['price'];
+        $response = $response['price']; */
 
-        return $response;
+        return $response['data']['BTC'][0]['quote']['USD']['price'];
     }
 }
