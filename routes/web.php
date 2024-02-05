@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CoinmarketcapApi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,6 @@ Route::get('/', function () {
 Route::get('/signupmail', function () {
     return view('mail.UserRegistrationMail');
 });
+
+
+Route::get('/coinmarketapi-test/{symbol}', [CoinmarketcapApi::class, 'fetchSymbolPriceUsd']);
