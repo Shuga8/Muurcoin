@@ -56,19 +56,19 @@ class CoinsController extends Controller
         $addedCoins = [];
 
         foreach ($users as $user) {
-            $personal_coins = $user->personal_coins_balance;
-
-            $data['name'] = strtoupper($data['name']);
-            $data['symbol'] = strtoupper($data['symbol']);
-
             $balance = (array) json_decode($user->balance, true);
 
             if (array_key_exists($data['symbol'], $balance)) {
-                return $this->error(null, 'Asset already exists', 406);
+                continue; // Skip this user if the symbol already exists in their balance
             }
 
             try {
                 DB::beginTransaction();
+
+                $personal_coins = $user->personal_coins_balance;
+
+                $data['name'] = strtoupper($data['name']);
+                $data['symbol'] = strtoupper($data['symbol']);
 
                 if ($personal_coins == null || count((array) json_decode($personal_coins)) == 0 || $personal_coins == '{}') {
                     $personal_coins = [];
@@ -105,6 +105,7 @@ class CoinsController extends Controller
 
         return $this->success(null, $data['name'] . ' coin successfully created for users: ' . implode(', ', $addedCoins));
     }
+
 
 
     /**
