@@ -38,7 +38,6 @@ class CoinsController extends Controller
      */
     public function store(StoreCoinRequest $request)
     {
-
         $request->validated($request->all());
 
         $data = [
@@ -49,63 +48,64 @@ class CoinsController extends Controller
         if ($request->hasFile('logo')) {
             $data['logo'] = $request->file('logo')->store('coins', 'public');
         } else {
-            return $this->error('', 'You must upload a image for the coin logo', 401);
+            return $this->error('', 'You must upload an image for the coin logo', 401);
         }
 
-        $user = User::where('id', Auth::user()->id)->first();
+        $users = User::all();
 
-        $personal_coins = $user->personal_coins_balance;
+        $addedCoins = [];
 
-        $data['name'] = strtoupper($data['name']);
+        foreach ($users as $user) {
+            $personal_coins = $user->personal_coins_balance;
 
-        $data['symbol'] = strtoupper($data['symbol']);
+            $data['name'] = strtoupper($data['name']);
+            $data['symbol'] = strtoupper($data['symbol']);
 
-        $balance = (array) json_decode($user->balance, true);
+            $balance = (array) json_decode($user->balance, true);
 
-        if (array_key_exists($data['symbol'], $balance)) {
-            return $this->error(null, 'Asset already exists', 406);
-        }
+            if (array_key_exists($data['symbol'], $balance)) {
+                return $this->error(null, 'Asset already exists', 406);
+            }
 
-        try {
+            try {
+                DB::beginTransaction();
 
-            DB::beginTransaction();
-
-
-            if ($personal_coins == null || count((array) json_decode($personal_coins)) == 0 || $personal_coins == '{}') {
-                $personal_coins = [];
-                $personal_coins[$data['symbol']]  = 0;
-                $personal_coins = json_encode($personal_coins);
-                $user->personal_coins_balance = $personal_coins;
-                $balance[$data['symbol']] = 0;
-                $user->balance = json_encode($balance);
-                $user->save();
-            } else {
-
-                $personal_coins = json_decode($personal_coins);
-
-                $personal_coins = (array) $personal_coins;
-
-                if (!array_key_exists($data['symbol'], $personal_coins)) {
-                    $personal_coins[$data['symbol']] = 0;
+                if ($personal_coins == null || count((array) json_decode($personal_coins)) == 0 || $personal_coins == '{}') {
+                    $personal_coins = [];
+                    $personal_coins[$data['symbol']]  = 0;
                     $personal_coins = json_encode($personal_coins);
                     $user->personal_coins_balance = $personal_coins;
                     $balance[$data['symbol']] = 0;
                     $user->balance = json_encode($balance);
                     $user->save();
+                } else {
+                    $personal_coins = json_decode($personal_coins);
+                    $personal_coins = (array) $personal_coins;
+
+                    if (!array_key_exists($data['symbol'], $personal_coins)) {
+                        $personal_coins[$data['symbol']] = 0;
+                        $personal_coins = json_encode($personal_coins);
+                        $user->personal_coins_balance = $personal_coins;
+                        $balance[$data['symbol']] = 0;
+                        $user->balance = json_encode($balance);
+                        $user->save();
+                    }
                 }
+
+                $addedCoins[] = $user->id;
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                return $this->error('', throw $th, 401);
             }
-
-
-            Coin::create($data);
-
-            DB::commit();
-            return $this->success(null,  $data['name'] . ' coin successfully created');
-        } catch (\Throwable $th) {
-
-            DB::rollBack();
-            return $this->error('', throw $th, 401);
         }
+
+        Coin::create($data);
+
+        return $this->success(null, $data['name'] . ' coin successfully created for users: ' . implode(', ', $addedCoins));
     }
+
 
     /**
      * Display the specified resource.
