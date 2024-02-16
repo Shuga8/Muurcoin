@@ -14,7 +14,7 @@ class TransferController extends Controller
     {
         $request->validated($request->all());
 
-        if (auth()->user()->username == $request->username) {
+        if (strtolower(auth()->user()->username) == (strtolower(trim($request->username)))) {
             return $this->error(null, "You cannot transfer to yourself", 406);
         } else {
             return $this->success(null, 'continue');
