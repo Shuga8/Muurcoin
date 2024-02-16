@@ -52,7 +52,7 @@ Route::middleware('auth:sanctum', 'verified')->group(function () {
         Route::post('/', [DepositController::class, 'achieve'])->name('achieve');
     });
 
-    Route::prefix('transfer')->name('api.transfer')->group(function () {
+    Route::prefix('transfer')->name('api.transfer.')->group(function () {
         Route::post('/achieve', [TransferController::class, 'achieve'])->name('achieve');
     });
 });

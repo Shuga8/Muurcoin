@@ -11,5 +11,7 @@ class TransferController extends Controller
     use HttpResponses;
     public function achieve(TransferRequest $request)
     {
+
+        $request->validated($request->all());
     }
 }
