@@ -45,12 +45,12 @@ class TransferController extends Controller
 
         $amount = abs($request->amount);
 
-        return $this->error(null, $request->symbol, 417);
-        if ($amount > $sender->balance[$request->symbol]) {
-            return $this->error(null, "Amount cannot be less than available balance for $request->symbol", 417);
+
+        if ($amount > $sender->balance[$request->wallet]) {
+            return $this->error(null, "Amount cannot be less than available balance for $request->wallet", 417);
         } else {
-            $sender->balance[$request->symbol] = (float) $sender->balance[$request->symbol] - $amount;
-            $recipient->balance[$request->symbol] = $amount + (float) $recipient->balance[$request->symbol];
+            $sender->balance[$request->wallet] = (float) $sender->balance[$request->wallet] - $amount;
+            $recipient->balance[$request->wallet] = $amount + (float) $recipient->balance[$request->wallet];
         }
 
         $sender->balance = json_encode($sender->balance);
@@ -65,8 +65,8 @@ class TransferController extends Controller
                 'amount' => -$amount,
                 'wallet' => $request->wallet,
                 'trx_type' => 'Transfer',
-                'post_balance' => (float) $sender->balance[$request->symbol],
-                'details' => "$amount$request->symbol was transfered to $request->username",
+                'post_balance' => (float) $sender->balance[$request->wallet],
+                'details' => "$amount$request->wallet was transfered to $request->username",
                 'status' => 'completed'
             ];
 
@@ -76,8 +76,8 @@ class TransferController extends Controller
                 'amount' => $amount,
                 'wallet' => $request->wallet,
                 'trx_type' => 'Transfer',
-                'post_balance' => (float) $recipient->balance[$request->symbol],
-                'details' => "$amount$request->symbol was recieved from $sender->username",
+                'post_balance' => (float) $recipient->balance[$request->wallet],
+                'details' => "$amount$request->wallet was recieved from $sender->username",
                 'status' => 'completed'
             ];
 
@@ -88,7 +88,7 @@ class TransferController extends Controller
             $recipient->save();
 
             DB::commit();
-            return $this->success(null, "Transfer to $request->username  was successfull");
+            return $this->success(null, "Transfer of $amount$request->wallet to $request->username  was successfull");
         } catch (\Throwable $th) {
 
             DB::rollBack();
