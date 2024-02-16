@@ -49,8 +49,9 @@ class TransferController extends Controller
         if ($amount > $sender->balance[$request->wallet]) {
             return $this->error(null, "Amount cannot be less than available balance for $request->wallet", 417);
         } else {
-            $sender->balance[$request->wallet] = (float) $sender->balance[$request->wallet] - $amount;
-            $recipient->balance[$request->wallet] = $amount + (float) $recipient->balance[$request->wallet];
+            // Update balances
+            $sender->balance[$request->wallet] -= $amount;
+            $recipient->balance[$request->wallet] += $amount;
         }
 
         $sender->balance = json_encode($sender->balance);
@@ -84,8 +85,8 @@ class TransferController extends Controller
             Transaction::create($transaction1);
             Transaction::create($transaction2);
 
-            $sender->save();
-            $recipient->save();
+            $sender->update(['balance' => $sender->balance]);
+            $recipient->update(['balance' => $recipient->balance]);
 
             DB::commit();
             return $this->success(null, "Transfer of $amount$request->wallet to $request->username  was successfull");
