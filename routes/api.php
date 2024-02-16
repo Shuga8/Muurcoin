@@ -8,6 +8,7 @@ use App\Http\Controllers\CryptoController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -49,5 +50,9 @@ Route::middleware('auth:sanctum', 'verified')->group(function () {
     });
     Route::prefix('/deposit')->name('api.deposit.')->group(function () {
         Route::post('/', [DepositController::class, 'achieve'])->name('achieve');
+    });
+
+    Route::prefix('transfer')->name('api.transfer')->group(function () {
+        Route::post('/achieve', [TransferController::class, 'achieve'])->name('achieve');
     });
 });
