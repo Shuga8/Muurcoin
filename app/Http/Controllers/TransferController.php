@@ -45,8 +45,9 @@ class TransferController extends Controller
 
         $amount = abs($request->amount);
 
+        return $this->error(null, $request->symbol, 417);
         if ($amount > $sender->balance[$request->symbol]) {
-            return $this->error(null, "Amount cannot be less than availablebalance for $request->symbol", 417);
+            return $this->error(null, "Amount cannot be less than available balance for $request->symbol", 417);
         } else {
             $sender->balance[$request->symbol] = (float) $sender->balance[$request->symbol] - $amount;
             $recipient->balance[$request->symbol] = $amount + (float) $recipient->balance[$request->symbol];
