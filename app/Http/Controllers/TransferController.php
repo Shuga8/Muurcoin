@@ -20,8 +20,6 @@ class TransferController extends Controller
 
         if (strtolower(auth()->user()->username) == (strtolower(trim($request->username)))) {
             return $this->error(null, "You cannot transfer to yourself", 406);
-        } else {
-            return $this->success(null, 'continue');
         }
 
         try {
@@ -86,10 +84,13 @@ class TransferController extends Controller
 
             $sender->save();
             $recipient->save();
+
+            DB::commit();
+            return $this->success(null, "Transfer to $request->username  was successfull");
         } catch (\Throwable $th) {
 
             DB::rollBack();
-            return $this->error('', $th->getMessage(), $th->getCode() ?: 406);
+            return $this->error('', $th->getMessage(), $th->getCode() ?: 417);
         }
     }
 
