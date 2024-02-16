@@ -47,7 +47,7 @@ class TransferController extends Controller
 
 
         if ($amount > $senderBalance[$request->wallet]) {
-            return $this->error(null, "Amount cannot be less than available balance for $request->wallet", 417);
+            return $this->error(null, "Amount cannot be less than available balance for $request->wallet", 406);
         }
         // Update balances
         $senderBalance[$request->wallet] -= $amount;
