@@ -32,17 +32,16 @@ class TransferController extends Controller
 
         $sender->balance = json_decode($sender->balance, true);
 
-        return $this->error(null, $sender->balance, 417);
-
         $recipient = User::where('username', $request->username)->first();
-
-        $recipient->balance = json_decode($recipient->balance, true);
 
         try {
             $this->checkIfSymbolExistsForRecipient(strtoupper($request->wallet), $recipient);
         } catch (\Throwable $th) {
             return $this->error(null, $th->getMessage(), $th->getCode()  ?: 406);
         }
+
+        $recipient->balance = json_decode($recipient->balance, true);
+
 
         $amount = abs($request->amount);
 
