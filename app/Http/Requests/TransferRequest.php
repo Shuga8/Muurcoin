@@ -24,7 +24,7 @@ class TransferRequest extends FormRequest
         return [
             'username' => ['required', 'string', 'exists:users,username'],
             'wallet' => ['required', 'string'],
-            'amount' => ['required', 'number']
+            'amount' => ['required', 'numeric']
         ];
     }
 }
