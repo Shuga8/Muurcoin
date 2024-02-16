@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Nette\Utils\Random;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TransferRequest;
+use App\Models\Transaction;
 
 class TransferController extends Controller
 {
@@ -19,6 +23,74 @@ class TransferController extends Controller
         } else {
             return $this->success(null, 'continue');
         }
+
+        try {
+            $this->checkIfSymbolExists(strtoupper($request->wallet));
+        } catch (\Throwable $th) {
+            return $this->error(null, $th->getMessage(), $th->getCode()  ?: 406);
+        }
+
+        $sender = User::where('id', auth()->user()->id)->first();
+
+        $sender->balance = json_decode($sender->balance, true);
+
+        $recipient = User::where('username', $request->username)->first();
+
+        $recipient->balance = json_decode($recipient->balance, true);
+
+        try {
+            $this->checkIfSymbolExistsForRecipient(strtoupper($request->wallet), $recipient);
+        } catch (\Throwable $th) {
+            return $this->error(null, $th->getMessage(), $th->getCode()  ?: 406);
+        }
+
+        $amount = abs($request->amount);
+
+        if ($amount > $sender->balance[$request->symbol]) {
+            return $this->error(null, "Amount cannot be less than availablebalance for $request->symbol", 417);
+        } else {
+            $sender->balance[$request->symbol] = (float) $sender->balance[$request->symbol] - $amount;
+            $recipient->balance[$request->symbol] = $amount + (float) $recipient->balance[$request->symbol];
+        }
+
+        $sender->balance = json_encode($sender->balance);
+        $recipient->balance = json_encode($recipient->balance);
+
+        try {
+
+            DB::beginTransaction();
+            $transaction1 = [
+                'user_id' => $sender->id,
+                'reference_id' => uniqid() . now() . Random::generate(10),
+                'amount' => -$amount,
+                'wallet' => $request->wallet,
+                'trx_type' => 'Transfer',
+                'post_balance' => (float) $sender->balance[$request->symbol],
+                'details' => "$amount$request->symbol was transfered to $request->username",
+                'status' => 'completed'
+            ];
+
+            $transaction2 = [
+                'user_id' => $recipient->id,
+                'reference_id' => uniqid() . now() . Random::generate(10),
+                'amount' => $amount,
+                'wallet' => $request->wallet,
+                'trx_type' => 'Transfer',
+                'post_balance' => (float) $recipient->balance[$request->symbol],
+                'details' => "$amount$request->symbol was recieved from $sender->username",
+                'status' => 'completed'
+            ];
+
+            Transaction::create($transaction1);
+            Transaction::create($transaction2);
+
+            $sender->save();
+            $recipient->save();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return $this->error('', $th->getMessage(), $th->getCode() ?: 406);
+        }
     }
 
     public function checkIfSymbolExists($symbol)
@@ -29,6 +101,17 @@ class TransferController extends Controller
 
         if (!array_key_exists($symbol, $balance)) {
             throw new \Exception("$symbol not acceptable", 406);
+        } else {
+            return true;
+        }
+    }
+
+    public function checkIfSymbolExistsForRecipient($symbol, $recipient)
+    {
+        $balance =  json_decode($recipient->balance, true);
+
+        if (!array_key_exists($symbol, $balance)) {
+            throw new \Exception("Recipient cannot access $symbol", 406);
         } else {
             return true;
         }
