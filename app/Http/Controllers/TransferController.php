@@ -53,9 +53,6 @@ class TransferController extends Controller
         $senderBalance[$request->wallet] -= $amount;
         $recipientBalance[$request->wallet] += $amount;
 
-        $senderBalance  = json_encode($senderBalance);
-        $recipientBalance  = json_encode($recipientBalance);
-
         try {
 
             DB::beginTransaction();
@@ -84,15 +81,18 @@ class TransferController extends Controller
             Transaction::create($transaction1);
             Transaction::create($transaction2);
 
+            $senderBalance  = json_encode($senderBalance);
+            $recipientBalance  = json_encode($recipientBalance);
+
             $sender->update(['balance' => $senderBalance]);
             $recipient->update(['balance' => $recipientBalance]);
 
             DB::commit();
             return $this->success(null, "Transfer of $amount$request->wallet to $request->username  was successfull");
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
 
             DB::rollBack();
-            return $this->error('', $th->getMessage(), $th->getCode() ?: 417);
+            return $this->error('', $e->getMessage(), $e->getCode() ?: 417);
         }
     }
 
