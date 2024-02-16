@@ -30,6 +30,8 @@ class TransferController extends Controller
 
         $sender = User::where('id', auth()->user()->id)->first();
 
+        return $this->error(null, $sender->balance, 417);
+
         $sender->balance = json_decode($sender->balance, true);
 
         $recipient = User::where('username', $request->username)->first();
