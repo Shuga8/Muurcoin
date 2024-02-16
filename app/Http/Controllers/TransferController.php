@@ -30,7 +30,7 @@ class TransferController extends Controller
 
         $sender = User::where('id', auth()->user()->id)->first();
 
-        $sender->balance = json_decode($sender->balance, true);
+        $senderBalance  = json_decode($sender->balance, true);
 
         $recipient = User::where('username', $request->username)->first();
 
@@ -40,22 +40,21 @@ class TransferController extends Controller
             return $this->error(null, $th->getMessage(), $th->getCode()  ?: 406);
         }
 
-        $recipient->balance = json_decode($recipient->balance, true);
+        $recipientBalance  = json_decode($recipient->balance, true);
 
 
         $amount = abs($request->amount);
 
 
-        if ($amount > $sender->balance[$request->wallet]) {
+        if ($amount > $senderBalance[$request->wallet]) {
             return $this->error(null, "Amount cannot be less than available balance for $request->wallet", 417);
-        } else {
-            // Update balances
-            $sender->balance[$request->wallet] -= $amount;
-            $recipient->balance[$request->wallet] += $amount;
         }
+        // Update balances
+        $senderBalance[$request->wallet] -= $amount;
+        $recipientBalance[$request->wallet] += $amount;
 
-        $sender->balance = json_encode($sender->balance);
-        $recipient->balance = json_encode($recipient->balance);
+        $senderBalance  = json_encode($senderBalance);
+        $recipientBalance  = json_encode($recipientBalance);
 
         try {
 
@@ -66,7 +65,7 @@ class TransferController extends Controller
                 'amount' => -$amount,
                 'wallet' => $request->wallet,
                 'trx_type' => 'Transfer',
-                'post_balance' => (float) $sender->balance[$request->wallet],
+                'post_balance' => (float) $senderBalance[$request->wallet],
                 'details' => "$amount$request->wallet was transfered to $request->username",
                 'status' => 'completed'
             ];
@@ -77,7 +76,7 @@ class TransferController extends Controller
                 'amount' => $amount,
                 'wallet' => $request->wallet,
                 'trx_type' => 'Transfer',
-                'post_balance' => (float) $recipient->balance[$request->wallet],
+                'post_balance' => (float) $recipientBalance[$request->wallet],
                 'details' => "$amount$request->wallet was recieved from $sender->username",
                 'status' => 'completed'
             ];
@@ -85,8 +84,8 @@ class TransferController extends Controller
             Transaction::create($transaction1);
             Transaction::create($transaction2);
 
-            $sender->update(['balance' => $sender->balance]);
-            $recipient->update(['balance' => $recipient->balance]);
+            $sender->update(['balance' => $senderBalance]);
+            $recipient->update(['balance' => $recipientBalance]);
 
             DB::commit();
             return $this->success(null, "Transfer of $amount$request->wallet to $request->username  was successfull");
