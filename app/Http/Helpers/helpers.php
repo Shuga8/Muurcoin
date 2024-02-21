@@ -43,3 +43,8 @@ function dateSorting($arr)
     usort($arr, "dateSort");
     return $arr;
 }
+
+function getPaginate($paginate = 20)
+{
+    return $paginate;
+}
