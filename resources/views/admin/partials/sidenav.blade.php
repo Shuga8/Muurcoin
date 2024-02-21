@@ -12,28 +12,28 @@
 					</a>
 				</li>
 
-				<li class="sidebar-menu-item {{ menuActive('admin.pairs.index') }}">
+				{{-- <li class="sidebar-menu-item {{ menuActive('admin.pairs.index') }}">
 					<a class="nav-link" data-default-url="{{ route('admin.pairs.index') }}" href="{{ route('admin.pairs.index') }}">
 						<i class="menu-icon las la-coins"></i>
 						<span class="menu-title">@lang('Currency Pairs') </span>
 					</a>
 				</li>
 
-				{{-- <li class="sidebar-menu-item {{ menuActive('admin.crypto.currency.index') }}">
+				 <li class="sidebar-menu-item {{ menuActive('admin.crypto.currency.index') }}">
 					<a class="nav-link" data-default-url="{{ route('admin.crypto.currency.index') }}"
 						href="{{ route('admin.crypto.currency.index') }}">
 						<i class="menu-icon las la-coins"></i>
 						<span class="menu-title">@lang('Crypto Currency') </span>
 					</a>
-				</li> --}}
+				</li> 
 
-				{{-- <li class="sidebar-menu-item {{ menuActive('admin.fiat.currency.index') }}">
+				<li class="sidebar-menu-item {{ menuActive('admin.fiat.currency.index') }}">
 					<a class="nav-link" data-default-url="{{ route('admin.fiat.currency.index') }}"
 						href="{{ route('admin.fiat.currency.index') }}">
 						<i class="menu-icon las la-coins"></i>
 						<span class="menu-title">@lang('Fiat Currency') </span>
 					</a>
-				</li> --}}
+				</li> 
 
 				@if (auth('admin')->user()->name == 'Super Admin')
 					<li class="sidebar-menu-item {{ menuActive('admin.add-admin') }}">
@@ -82,7 +82,7 @@
 					</a>
 				</li>
 
-				{{--  
+				
 				<li class="sidebar-menu-item {{ menuActive('admin.lockup.setting*') }}">
 					<a class="nav-link" href="{{ route('admin.lockup.setting.index') }}">
 						<i class="menu-icon las la-cog"></i>
@@ -228,18 +228,13 @@
                             </li>
                         </ul>
                     </div>
-                </li> --}}
+                </li> 
 
 				<li class="sidebar-menu-item sidebar-dropdown">
 					<a class="{{ menuActive('admin.users*', 3) }}" href="javascript:void(0)">
 						<i class="menu-icon las la-users"></i>
 						<span class="menu-title">@lang('Manage Users')</span>
-						@if (
-							$bannedUsersCount > 0 ||
-								$emailUnverifiedUsersCount > 0 ||
-								$mobileUnverifiedUsersCount > 0 ||
-								$kycUnverifiedUsersCount > 0 ||
-								$kycPendingUsersCount > 0)
+						@if ($bannedUsersCount > 0 || $emailUnverifiedUsersCount > 0 || $mobileUnverifiedUsersCount > 0 || $kycUnverifiedUsersCount > 0 || $kycPendingUsersCount > 0)
 							<span class="menu-badge pill bg--danger ms-auto">
 								<i class="fa fa-exclamation"></i>
 							</span>
@@ -584,13 +579,13 @@
 					</a>
 				</li>
 
-				{{-- <li class="sidebar-menu-item  {{menuActive(['admin.language.manage','admin.language.key'])}}">
+				 <li class="sidebar-menu-item  {{menuActive(['admin.language.manage','admin.language.key'])}}">
                     <a href="{{route('admin.language.manage')}}" class="nav-link"
                        data-default-url="{{ route('admin.language.manage') }}">
                         <i class="menu-icon las la-language"></i>
                         <span class="menu-title">@lang('Language') </span>
                     </a>
-                </li> --}}
+                </li> 
 
 				<li class="sidebar-menu-item {{ menuActive('admin.seo') }}">
 					<a class="nav-link" href="{{ route('admin.seo') }}">
@@ -642,7 +637,7 @@
 					</div>
 				</li>
 
-				{{-- <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
+				 <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
 
                 <li class="sidebar-menu-item {{menuActive('admin.frontend.templates')}}">
                     <a href="{{route('admin.frontend.templates')}}" class="nav-link ">
@@ -680,7 +675,7 @@
                             @endforeach
                         </ul>
                     </div>
-                </li> --}}
+                </li> 
 
 				<li class="sidebar__menu-header">@lang('Extra')</li>
 
@@ -732,17 +727,17 @@
 
 			</ul>
 
+		</div> --}}
 		</div>
 	</div>
-</div>
-<!-- sidebar end -->
+	<!-- sidebar end -->
 
-@push('script')
-	<script>
-		if ($('li').hasClass('active')) {
-			$('#sidebar__menuWrapper').animate({
-				scrollTop: eval($(".active").offset().top - 320)
-			}, 500);
-		}
-	</script>
-@endpush
+	@push('script')
+		<script>
+			if ($('li').hasClass('active')) {
+				$('#sidebar__menuWrapper').animate({
+					scrollTop: eval($(".active").offset().top - 320)
+				}, 500);
+			}
+		</script>
+	@endpush

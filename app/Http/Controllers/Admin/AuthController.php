@@ -9,6 +9,10 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return "login page";
+        $data = [
+            'title' => 'Admin Login'
+        ];
+
+        return view('admin.auth.login')->with($data);
     }
 }
