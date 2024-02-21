@@ -723,21 +723,21 @@
 						<i class="menu-icon lab la-css3-alt"></i>
 						<span class="menu-title">@lang('Custom CSS')</span>
 					</a>
-				</li>
+				</li> --}}
 
 			</ul>
 
-		</div> --}}
 		</div>
 	</div>
-	<!-- sidebar end -->
+</div>
+<!-- sidebar end -->
 
-	@push('script')
-		<script>
-			if ($('li').hasClass('active')) {
-				$('#sidebar__menuWrapper').animate({
-					scrollTop: eval($(".active").offset().top - 320)
-				}, 500);
-			}
-		</script>
-	@endpush
+@push('script')
+	<script>
+		if ($('li').hasClass('active')) {
+			$('#sidebar__menuWrapper').animate({
+				scrollTop: eval($(".active").offset().top - 320)
+			}, 500);
+		}
+	</script>
+@endpush
