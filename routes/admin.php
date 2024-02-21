@@ -14,14 +14,15 @@ Route::namespace('Admin')->name('admin.')->group(function () {
 
     Route::middleware('admin')->group(function () {
 
-
-
         Route::controller('AdminController')->group(function () {
             Route::get('dashboard', 'index')->name('dashboard');
         });
 
         Route::controller('ManageUsersController')->prefix('users')->name('users.')->group(function () {
             Route::get('/', 'allUsers')->name('all');
+            Route::get('/active', 'activeUsers')->name('active');
+            Route::get('/unverified-email', 'unverifiedEmailUsers')->name('email.unverified');
+            Route::get('/verified-email', 'verifiedEmailUsers')->name('email.verified');
         });
     });
 });

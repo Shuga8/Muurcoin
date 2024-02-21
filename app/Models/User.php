@@ -65,4 +65,20 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasMany(Exchange::class);
     }
+
+    // SCOPES
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeEmailUnverified($query)
+    {
+        return $query->whereNull('email_verified_at');
+    }
+
+    public function scopeEmailVerified($query)
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
 }

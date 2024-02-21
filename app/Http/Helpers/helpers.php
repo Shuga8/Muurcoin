@@ -29,5 +29,17 @@ function getImage($image, $size = null)
     if ($size) {
         return route('placeholder.image', $size);
     }
-    return asset('assets/images/default.png');
+    return asset('images/default.png');
+}
+
+function dateSort($a, $b)
+{
+    return strtotime($a) - strtotime($b);
+}
+
+
+function dateSorting($arr)
+{
+    usort($arr, "dateSort");
+    return $arr;
 }

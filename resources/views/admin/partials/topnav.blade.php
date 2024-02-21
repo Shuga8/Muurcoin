@@ -50,9 +50,7 @@
 				<button class="" data-bs-toggle="dropdown" data-display="static" type="button" aria-haspopup="true"
 					aria-expanded="false">
 					<span class="navbar-user">
-						<span class="navbar-user__thumb"><img
-								src="{{ getImage('assets/admin/images/profile/' . auth()->guard('admin')->user()->image) }}"
-								alt="image"></span>
+						<span class="navbar-user__thumb"><img src="{{ asset('assets/user-icon-50.png') }}" alt="image"></span>
 						<span class="navbar-user__info">
 							<span class="navbar-user__name">{{ auth()->guard('admin')->user()->username }}</span>
 						</span>
