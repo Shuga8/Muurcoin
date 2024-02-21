@@ -9,15 +9,15 @@
 
 	<link type="image/png" href="{{ asset('favicon.png') }}" rel="shortcut icon">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/admin/css/vendor/bootstrap-toggle.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/global/css/all.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/global/css/line-awesome.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('global/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('admin/css/vendor/bootstrap-toggle.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('global/css/all.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('global/css/line-awesome.min.css') }}" rel="stylesheet">
 
 	@stack('style-lib')
 
-	<link href="{{ asset('assets/admin/css/vendor/select2.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/admin/css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('admin/css/vendor/select2.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
 
 
 	@stack('style')
@@ -26,19 +26,19 @@
 <body>
 	{{ $slot }}
 
-	<script src="{{ asset('assets/global/js/jquery-3.6.0.min.js') }}"></script>
-	<script src="{{ asset('assets/global/js/bootstrap.bundle.min.js') }}"></script>
-	<script src="{{ asset('assets/admin/js/vendor/bootstrap-toggle.min.js') }}"></script>
-	<script src="{{ asset('assets/admin/js/vendor/jquery.slimscroll.min.js') }}"></script>
+	<script src="{{ asset('global/js/jquery-3.6.0.min.js') }}"></script>
+	<script src="{{ asset('global/js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('admin/js/vendor/bootstrap-toggle.min.js') }}"></script>
+	<script src="{{ asset('admin/js/vendor/jquery.slimscroll.min.js') }}"></script>
 
 
 	@include('partials.notify')
 	@stack('script-lib')
 
-	<script src="{{ asset('assets/admin/js/nicEdit.js') }}"></script>
+	<script src="{{ asset('admin/js/nicEdit.js') }}"></script>
 
-	<script src="{{ asset('assets/admin/js/vendor/select2.min.js') }}"></script>
-	<script src="{{ asset('assets/admin/js/app.js') }}"></script>
+	<script src="{{ asset('admin/js/vendor/select2.min.js') }}"></script>
+	<script src="{{ asset('admin/js/app.js') }}"></script>
 
 	{{-- LOAD NIC EDIT --}}
 	<script>

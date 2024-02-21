@@ -15,4 +15,8 @@ class AuthController extends Controller
 
         return view('admin.auth.login')->with($data);
     }
+
+    public function auth()
+    {
+    }
 }

@@ -6,6 +6,7 @@ Route::namespace('Admin')->name('admin.')->group(function () {
 
     Route::controller('AuthController')->prefix('auth')->group(function () {
         Route::get('/', 'index')->name('login');
+        Route::post('/', 'auth')->name('login.auth');
     });
 
     Route::middleware('admin')->group(function () {
