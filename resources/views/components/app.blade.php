@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ $general->siteName($pageTitle ?? '') }}</title>
 
-	<link type="image/png" href="{{ getImage(getFilePath('logoIcon') . '/favicon.png') }}" rel="shortcut icon">
+	<link type="image/x-icon" href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/admin/css/vendor/bootstrap-toggle.min.css') }}" rel="stylesheet">
