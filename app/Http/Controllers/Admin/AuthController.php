@@ -33,4 +33,16 @@ class AuthController extends Controller
         $notify[] = ['error', 'Invalid Credentials'];
         return back()->withNotify($notify);
     }
+
+    public function logout(Request $request)
+    {
+        auth('admin')->logout();
+
+        $request->session()->forget('admin'); // Remove admin-related session data
+        $request->session()->regenerateToken();
+
+        $notify[] = ['success', 'You have been logged out'];
+
+        return redirect()->intended(route('admin.login'))->withNotify($notify);
+    }
 }
