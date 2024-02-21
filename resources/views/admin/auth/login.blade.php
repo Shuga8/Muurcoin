@@ -1,2 +1,1 @@
-<x-app :title="$title">
-</x-app>
+<x-no-auth :title="$title"></x-no-auth>
