@@ -58,4 +58,15 @@ class ManageUsersController extends Controller
 
         return view('admin.users.list')->with($data);
     }
+
+    public function verifiedEmailUsers()
+    {
+
+        $data = [
+            'title' => 'Verified Email Users',
+            'users' => $this->userData('emailVerified')
+        ];
+
+        return view('admin.users.list')->with($data);
+    }
 }
