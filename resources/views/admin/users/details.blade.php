@@ -51,8 +51,7 @@
 							</h3>
 							<p class="text-white">@lang('Withdrawals')</p>
 						</div>
-						<a class="widget-two__btn"
-							href="{{ route('admin.withdraw.log') }}?search={{ $user->username }}">@lang('View All')</a>
+						<a class="widget-two__btn" href="{{ route('admin.withdraw.log', $user->id) }}">@lang('View All')</a>
 					</div>
 				</div>
 				<div class="col-xxl-3 col-sm-6">
