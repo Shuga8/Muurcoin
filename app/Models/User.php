@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use App\Traits\Searchable;
 
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
@@ -66,6 +67,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function exchanges(): HasMany
     {
         return $this->hasMany(Exchange::class);
+    }
+
+    // Attributes
+    public function fullname(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->firstname . ' ' . $this->lastname,
+        );
     }
 
     // SCOPES
