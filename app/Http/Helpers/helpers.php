@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 function menuActive($routeName, $type = null, $param = null)
 {
     if ($type == 3) $class = 'side-menu--open';
@@ -47,4 +49,20 @@ function dateSorting($arr)
 function getPaginate($paginate = 20)
 {
     return $paginate;
+}
+
+
+function diffForHumans($date)
+{
+    $lang = session()->get('lang');
+    Carbon::setlocale($lang);
+    return Carbon::parse($date)->diffForHumans();
+}
+
+
+function showDateTime($date, $format = 'Y-m-d h:i A')
+{
+    $lang = session()->get('lang');
+    Carbon::setlocale($lang);
+    return Carbon::parse($date)->translatedFormat($format);
 }

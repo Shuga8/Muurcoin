@@ -24,6 +24,8 @@ Route::namespace('Admin')->name('admin.')->group(function () {
             Route::get('/unverified-email', 'unverifiedEmailUsers')->name('email.unverified');
             Route::get('/verified-email', 'verifiedEmailUsers')->name('email.verified');
             Route::get('/banned', 'verifiedEmailUsers')->name('banned');
+
+            Route::get('detail/{id}', 'detail')->name('detail');
         });
     });
 });
