@@ -18,6 +18,8 @@ Route::namespace('Admin')->name('admin.')->group(function () {
             Route::get('dashboard', 'index')->name('dashboard');
             Route::get('create', 'create')->name('add-admin');
             Route::post('store', 'store')->name('store');
+            Route::get('password', 'password')->name('password');
+            Route::post('password', 'passwordUpdate')->name('password.update');
         });
 
         Route::controller('ManageUsersController')->prefix('users')->name('users.')->group(function () {

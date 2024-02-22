@@ -58,12 +58,12 @@
 					</span>
 				</button>
 				<div class="dropdown-menu dropdown-menu--sm box--shadow1 dropdown-menu-right border-0 p-0">
-					<a class="dropdown-menu__item d-flex align-items-center px-3 py-2" href="">
+					{{-- <a class="dropdown-menu__item d-flex align-items-center px-3 py-2" href="">
 						<i class="dropdown-menu__icon las la-user-circle"></i>
 						<span class="dropdown-menu__caption">@lang('Profile')</span>
-					</a>
+					</a> --}}
 
-					<a class="dropdown-menu__item d-flex align-items-center px-3 py-2" href="">
+					<a class="dropdown-menu__item d-flex align-items-center px-3 py-2" href="{{ route('admin.password') }}">
 						<i class="dropdown-menu__icon las la-key"></i>
 						<span class="dropdown-menu__caption">@lang('Password')</span>
 					</a>

@@ -9,6 +9,7 @@ use App\Models\Admin;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\StoreAdminRequest;
 
@@ -119,5 +120,33 @@ class AdminController extends Controller
             $notify[] = ['error', 'Failed to create admin: ' . $e->getMessage()];
             return back()->withNotify($notify);
         }
+    }
+
+    public function password()
+    {
+
+        $data = [
+            'title' => 'Password Setting',
+            'admin' => auth('admin')->user()
+        ];
+        return view('admin.password')->with($data);
+    }
+
+    public function passwordUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => 'required|min:5|confirmed',
+        ]);
+
+        $user = Admin::findOrFail(auth('admin')->user()->id);
+        if (!Hash::check($request->old_password, $user->password)) {
+            $notify[] = ['error', 'Password doesn\'t match!!'];
+            return back()->withNotify($notify);
+        }
+        $user->password = bcrypt($request->password);
+        $user->save();
+        $notify[] = ['success', 'Password changed successfully.'];
+        return to_route('admin.password')->withNotify($notify);
     }
 }
