@@ -16,6 +16,8 @@ Route::namespace('Admin')->name('admin.')->group(function () {
 
         Route::controller('AdminController')->group(function () {
             Route::get('dashboard', 'index')->name('dashboard');
+            Route::get('create', 'create')->name('add-admin');
+            Route::post('store', 'store')->name('store');
         });
 
         Route::controller('ManageUsersController')->prefix('users')->name('users.')->group(function () {

@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreAdminRequest;
 
 class AdminController extends Controller
 {
@@ -73,5 +76,48 @@ class AdminController extends Controller
         ];
 
         return view('admin.dashboard')->with($data);
+    }
+
+    public function create()
+    {
+        if (auth('admin')->user()->role !== 'super-admin') {
+            abort(403);
+        }
+
+        $data = [
+            'title' => 'Create Admin',
+        ];
+
+        return view('admin.create')->with($data);
+    }
+
+    public function store(StoreAdminRequest $request)
+    {
+        if (auth('admin')->user()->role !== 'super-admin') {
+            abort(403);
+        }
+
+        try {
+
+            $formFields = [
+                'username' => $request->username,
+                'email' => $request->email,
+                'role' => $request->role,
+                'password' => $request->password
+            ];
+
+            $formFields['password'] = bcrypt($formFields['password']);
+
+            if (Admin::create($formFields)) {
+                $notify[] = ['success', 'Admin Successfully Created'];
+                return back()->withNotify($notify);
+            } else {
+                $notify[] = ['error', 'Failed to create admin'];
+                return back()->withNotify($notify);
+            }
+        } catch (QueryException $e) {
+            $notify[] = ['error', 'Failed to create admin: ' . $e->getMessage()];
+            return back()->withNotify($notify);
+        }
     }
 }

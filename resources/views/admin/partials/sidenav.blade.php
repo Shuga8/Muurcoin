@@ -12,6 +12,15 @@
 					</a>
 				</li>
 
+				@if (auth('admin')->user()->role == 'super-admin')
+					<li class="sidebar-menu-item {{ menuActive('admin.add-admin') }}">
+						<a class="nav-link" href="{{ route('admin.add-admin') }}">
+							<i class="menu-icon las la-plus"></i>
+							<span class="menu-title">@lang('Add Admin')</span>
+						</a>
+					</li>
+				@endif
+
 				<li class="sidebar-menu-item sidebar-dropdown">
 					<a class="{{ menuActive('admin.users*', 3) }}" href="javascript:void(0)">
 						<i class="menu-icon las la-users"></i>
