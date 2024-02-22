@@ -26,7 +26,6 @@
 				<div class="form-group">
 					<label class="sm-only" for="role">Role</label>
 					<select class="form-control" name="role">
-						<option class="form-control" value="manager" selected>Manager</option>
 						<option class="form-control" value="super-admin">Super Admin</option>
 					</select>
 				</div>
