@@ -220,6 +220,12 @@
 							<label>@lang('Wallet')</label>
 							<select class="form-control" name="wallet" required>
 								<option selected disabled>@lang('Select One')</option>
+								@php
+									$balances = json_decode($user->balance);
+								@endphp
+								@foreach ($balances as $key => $value)
+									<option value="{{ $key }}">{{ $key == 'MUURCOIN' ? 'MRCN' : $key }}</option>
+								@endforeach
 							</select>
 						</div>
 						<div class="form-group">
@@ -234,4 +240,22 @@
 			</div>
 		</div>
 	</div>
+
+	@push('script')
+		<script>
+			(function($) {
+				"use strict"
+				$('.bal-btn').click(function() {
+					var act = $(this).data('act');
+					$('#addSubModal').find('input[name=act]').val(act);
+					if (act == 'add') {
+						$('.type').text('Add');
+					} else {
+						$('.type').text('Subtract');
+					}
+				});
+
+			})(jQuery);
+		</script>
+	@endpush
 </x-auth>

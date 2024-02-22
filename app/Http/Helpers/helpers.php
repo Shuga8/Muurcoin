@@ -66,3 +66,14 @@ function showDateTime($date, $format = 'Y-m-d h:i A')
     Carbon::setlocale($lang);
     return Carbon::parse($date)->translatedFormat($format);
 }
+
+function getTrx($length = 12)
+{
+    $characters = 'ABCDEFGHJKMNOPQRSTUVWXYZ123456789';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
