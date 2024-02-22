@@ -35,7 +35,7 @@ Route::prefix('auth')->group(function () {
 });
 
 
-Route::middleware('auth:sanctum', 'verified')->group(function () {
+Route::middleware('auth:sanctum', 'verified', 'status')->group(function () {
     Route::name('api.')->group(function () {
         Route::resource('/user', UserController::class);
         Route::resource('/transactions', TransactionsController::class);
