@@ -19,6 +19,16 @@ class ManageUsersController extends Controller
         return view('admin.users.list')->with($data);
     }
 
+    public function activeUsers()
+    {
+
+        $data = [
+            'title' => 'All Users',
+            'users' => $this->userData('active'),
+        ];
+        return view('admin.users.list')->with($data);
+    }
+
     protected function userData($scope = null)
     {
         if ($scope) {
