@@ -20,4 +20,17 @@ class ReportController extends Controller
         ];
         return view('admin.transaction.details')->with($data);
     }
+
+    public function all()
+    {
+
+        $transactions = Transaction::paginate(getPaginate());
+
+        $data = [
+            'title' => 'All Transactions',
+            'transactions' => $transactions
+        ];
+
+        return view('admin.transaction.all')->with($data);
+    }
 }

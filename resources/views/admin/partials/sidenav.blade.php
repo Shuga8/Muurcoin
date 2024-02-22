@@ -62,6 +62,13 @@
 					</div>
 				</li>
 
+				<li class="sidebar-menu-item {{ menuActive('admin.report.all') }}">
+					<a class="nav-link" href="{{ route('admin.report.all') }}">
+						<i class="menu-icon las la-file-invoice-dollar"></i>
+						<span class="menu-title">@lang('Transactions')</span>
+					</a>
+				</li>
+
 				{{-- 
 				@if (auth('admin')->user()->name == 'Super Admin')
 					<li class="sidebar-menu-item {{ menuActive('admin.add-admin') }}">
