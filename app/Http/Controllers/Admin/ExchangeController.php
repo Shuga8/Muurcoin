@@ -14,7 +14,7 @@ class ExchangeController extends Controller
         $exchanges = Exchange::paginate(getPaginate());
 
         $data = [
-            'title' => 'Exchanges',
+            'title' => 'All Exchanges',
             'exchanges' => $exchanges
         ];
 
