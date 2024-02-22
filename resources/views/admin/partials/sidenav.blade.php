@@ -75,6 +75,13 @@
 						<span class="menu-title">@lang('Exchange')</span>
 					</a>
 				</li>
+
+				<li class="sidebar-menu-item {{ menuActive('admin.deposit.all') }}">
+					<a class="nav-link" href="{{ route('admin.deposit.all') }}">
+						<i class="menu-icon fas fa-hand-holding-usd"></i>
+						<span class="menu-title">@lang('Deposits')</span>
+					</a>
+				</li>
 				{{-- 
 				@if (auth('admin')->user()->name == 'Super Admin')
 					<li class="sidebar-menu-item {{ menuActive('admin.add-admin') }}">

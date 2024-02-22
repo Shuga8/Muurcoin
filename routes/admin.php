@@ -42,6 +42,7 @@ Route::namespace('Admin')->name('admin.')->group(function () {
         });
 
         Route::controller('DepositController')->name('deposit.')->prefix('deposit')->group(function () {
+            Route::get('', 'index')->name('all');
             Route::get('details/{id}', 'details')->name('list');
         });
 

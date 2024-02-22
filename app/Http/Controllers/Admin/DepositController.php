@@ -9,6 +9,19 @@ use Illuminate\Http\Request;
 
 class DepositController extends Controller
 {
+
+    public function index()
+    {
+        $transactions = Transaction::where('trx_type', 'Deposit')->paginate(getPaginate());
+
+        $data = [
+            'title' => 'All Deposits',
+            'transactions' => $transactions
+        ];
+
+        return view('admin.deposit.all')->with($data);
+    }
+
     public function details($id)
     {
         $user = User::findOrFail($id);
