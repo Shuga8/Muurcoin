@@ -4,9 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{ $title }}</title>
+	<title>{{ config('app.name') . ' Admin - ' . $title }}</title>
 
-	<link type="image/x-icon" href="{{ asset('favicon.ico') }}" rel="shortcut icon">
+	<link type="image/x-icon" href="{{ asset('favicon.png') }}" rel="shortcut icon">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link href="{{ asset('global/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('admin/css/vendor/bootstrap-toggle.min.css') }}" rel="stylesheet">
