@@ -26,6 +26,22 @@ Route::namespace('Admin')->name('admin.')->group(function () {
             Route::get('/banned', 'bannedUsers')->name('banned');
 
             Route::get('detail/{id}', 'detail')->name('detail');
+
+            Route::post('update/{id}', 'update')->name('update');
+            Route::post('add-sub-balance/{id}', 'addSubBalance')->name('add.sub.balance');
+        });
+
+        Route::controller('ReportController')->name('report.')->prefix('report')->group(function () {
+            Route::get('transaction', 'transaction')->name('transaction');
+        });
+
+        Route::controller('DepositController')->name('deposit.')->prefix('deposit')->group(function () {
+            Route::get('/', 'deposit')->name('list');
+        });
+
+
+        Route::controller('WithdrawalController')->name('withdraw.')->prefix('withdraw')->group(function () {
+            Route::get('log', 'log')->name('log');
         });
     });
 });
