@@ -20,7 +20,7 @@ class BlockBannedUsers
     {
         if (Auth::guard('sanctum')->check()) {
             if (Auth::guard('sanctum')->user()->status !== 'active') {
-                return $this->error(null, 'Your account has been banned', 403);
+                return $this->error(null, 'Your account has been banned', 451);
             }
         }
 
