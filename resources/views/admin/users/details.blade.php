@@ -38,8 +38,7 @@
 							<h3 class="text-white">{{ $widget['total_deposit'] }}</h3>
 							<p class="text-white">@lang('Deposits')</p>
 						</div>
-						<a class="widget-two__btn"
-							href="{{ route('admin.deposit.list') }}?search={{ $user->username }}">@lang('View All')</a>
+						<a class="widget-two__btn" href="{{ route('admin.deposit.list', $user->id) }}">@lang('View All')</a>
 					</div>
 				</div>
 				<div class="col-xxl-3 col-sm-6">
