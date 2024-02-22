@@ -69,6 +69,12 @@
 					</a>
 				</li>
 
+				<li class="sidebar-menu-item {{ menuActive('admin.exchange.all') }}">
+					<a class="nav-link" href="{{ route('admin.exchange.all') }}">
+						<i class="menu-icon las la-exchange-alt"></i>
+						<span class="menu-title">@lang('Exchange')</span>
+					</a>
+				</li>
 				{{-- 
 				@if (auth('admin')->user()->name == 'Super Admin')
 					<li class="sidebar-menu-item {{ menuActive('admin.add-admin') }}">
