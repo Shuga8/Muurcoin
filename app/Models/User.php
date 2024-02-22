@@ -72,6 +72,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $query->where('status', 'active');
     }
 
+    public function scopeBanned($query)
+    {
+        return $query->where('status', 'banned');
+    }
+
     public function scopeEmailUnverified($query)
     {
         return $query->whereNull('email_verified_at');

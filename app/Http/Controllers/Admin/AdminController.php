@@ -52,7 +52,7 @@ class AdminController extends Controller
                 });
         })
             ->where('created_at', '>=', Carbon::now()->subDays(30))
-            ->selectRaw("SUM(CASE WHEN trx_type = 'Spot' THEN -amount ELSE amount END) as amount, DATE_FORMAT(created_at,'%Y-%m-%d') as date")
+            ->selectRaw("SUM(-1 * amount) as amount, DATE_FORMAT(created_at,'%Y-%m-%d') as date")
             ->orderBy('created_at')
             ->groupBy('date')
             ->get();

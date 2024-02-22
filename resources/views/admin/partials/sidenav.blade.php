@@ -12,29 +12,57 @@
 					</a>
 				</li>
 
-				{{-- <li class="sidebar-menu-item {{ menuActive('admin.pairs.index') }}">
-					<a class="nav-link" data-default-url="{{ route('admin.pairs.index') }}" href="{{ route('admin.pairs.index') }}">
-						<i class="menu-icon las la-coins"></i>
-						<span class="menu-title">@lang('Currency Pairs') </span>
+				<li class="sidebar-menu-item sidebar-dropdown">
+					<a class="{{ menuActive('admin.users*', 3) }}" href="javascript:void(0)">
+						<i class="menu-icon las la-users"></i>
+						<span class="menu-title">@lang('Manage Users')</span>
+						@if ($bannedUsersCount > 0 || $emailUnverifiedUsersCount > 0)
+							<span class="menu-badge pill bg--danger ms-auto">
+								<i class="fa fa-exclamation"></i>
+							</span>
+						@endif
 					</a>
+					<div class="sidebar-submenu {{ menuActive('admin.users*', 2) }}">
+						<ul>
+							<li class="sidebar-menu-item {{ menuActive('admin.users.active') }}">
+								<a class="nav-link" href="{{ route('admin.users.active') }}">
+									<i class="menu-icon las la-dot-circle"></i>
+									<span class="menu-title">@lang('Active Users')</span>
+								</a>
+							</li>
+							<li class="sidebar-menu-item {{ menuActive('admin.users.banned') }}">
+								<a class="nav-link" href="{{ route('admin.users.banned') }}">
+									<i class="menu-icon las la-dot-circle"></i>
+									<span class="menu-title">@lang('Banned Users')</span>
+									@if ($bannedUsersCount)
+										<span class="menu-badge pill bg--danger ms-auto">{{ $bannedUsersCount }}</span>
+									@endif
+								</a>
+							</li>
+							<li class="sidebar-menu-item {{ menuActive('admin.users.email.unverified') }}">
+								<a class="nav-link" href="{{ route('admin.users.email.unverified') }}">
+									<i class="menu-icon las la-dot-circle"></i>
+									<span class="menu-title">@lang('Email Unverified')</span>
+
+									@if ($emailUnverifiedUsersCount)
+										<span class="menu-badge pill bg--danger ms-auto">{{ $emailUnverifiedUsersCount }}</span>
+									@endif
+								</a>
+							</li>
+
+
+							<li class="sidebar-menu-item {{ menuActive('admin.users.all') }}">
+								<a class="nav-link" href="{{ route('admin.users.all') }}">
+									<i class="menu-icon las la-dot-circle"></i>
+									<span class="menu-title">@lang('All Users')</span>
+								</a>
+							</li>
+
+						</ul>
+					</div>
 				</li>
 
-				 <li class="sidebar-menu-item {{ menuActive('admin.crypto.currency.index') }}">
-					<a class="nav-link" data-default-url="{{ route('admin.crypto.currency.index') }}"
-						href="{{ route('admin.crypto.currency.index') }}">
-						<i class="menu-icon las la-coins"></i>
-						<span class="menu-title">@lang('Crypto Currency') </span>
-					</a>
-				</li> 
-
-				<li class="sidebar-menu-item {{ menuActive('admin.fiat.currency.index') }}">
-					<a class="nav-link" data-default-url="{{ route('admin.fiat.currency.index') }}"
-						href="{{ route('admin.fiat.currency.index') }}">
-						<i class="menu-icon las la-coins"></i>
-						<span class="menu-title">@lang('Fiat Currency') </span>
-					</a>
-				</li> 
-
+				{{-- 
 				@if (auth('admin')->user()->name == 'Super Admin')
 					<li class="sidebar-menu-item {{ menuActive('admin.add-admin') }}">
 						<a class="nav-link" href="{{ route('admin.add-admin') }}">
@@ -43,122 +71,6 @@
 						</a>
 					</li>
 				@endif
-
-				<li class="sidebar-menu-item {{ menuActive('admin.trade.setting*') }}">
-					<a class="nav-link" href="{{ route('admin.trade.setting.index') }}">
-						<i class="menu-icon las la-cog"></i>
-						<span class="menu-title">@lang('Trade Setting') </span>
-					</a>
-				</li>
-
-				<li class="sidebar-menu-item {{ menuActive('admin.stock.setting*') }}">
-					<a class="nav-link" href="{{ route('admin.stock.setting.index') }}">
-						<i class="menu-icon las la-cog"></i>
-						<span class="menu-title">@lang('Stock Setting') </span>
-					</a>
-				</li>
-
-				<li class="sidebar-menu-item {{ menuActive('admin.commodity.setting*') }}">
-					<a class="nav-link" href="{{ route('admin.commodity.setting.index') }}">
-						<i class="menu-icon las la-cog"></i>
-						<span class="menu-title">@lang('Commodity Setting') </span>
-					</a>
-				</li>
-
-
-
-				<li class="sidebar-menu-item {{ menuActive('admin.earn.setting*') }}">
-					<a class="nav-link" href="{{ route('admin.earn.setting.index') }}">
-						<i class="menu-icon las la-cog"></i>
-						<span class="menu-title">@lang('Earn Setting') </span>
-					</a>
-				</li>
-
-
-				<li class="sidebar-menu-item {{ menuActive('admin.leverage.setting*') }}">
-					<a class="nav-link" href="{{ route('admin.leverage.setting.index') }}">
-						<i class="menu-icon las la-cog"></i>
-						<span class="menu-title">@lang('Leverage Setting') </span>
-					</a>
-				</li>
-
-				
-				<li class="sidebar-menu-item {{ menuActive('admin.lockup.setting*') }}">
-					<a class="nav-link" href="{{ route('admin.lockup.setting.index') }}">
-						<i class="menu-icon las la-cog"></i>
-						<span class="menu-title">@lang('Lockup Setting') </span>
-					</a>
-				</li>
-
-				<li class="sidebar-menu-item sidebar-dropdown">
-					<a class="{{ menuActive('admin.trade.log*', 3) }}" href="javascript:void(0)">
-						<i class="menu-icon las la-dice"></i>
-						<span class="menu-title">@lang('Trade log')</span>
-					</a>
-					<div class="sidebar-submenu {{ menuActive('admin.trade.log*', 2) }}">
-						<ul>
-							<li class="sidebar-menu-item {{ menuActive('admin.trade.log.index') }}">
-								<a class="nav-link" href="{{ route('admin.trade.log.index') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('All')</span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item {{ menuActive('admin.trade.log.wining') }}">
-								<a class="nav-link" href="{{ route('admin.trade.log.wining') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('Wining')</span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item {{ menuActive('admin.trade.log.losing') }}">
-								<a class="nav-link" href="{{ route('admin.trade.log.losing') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('Losing')</span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item {{ menuActive('admin.trade.log.draw') }}">
-								<a class="nav-link" href="{{ route('admin.trade.log.draw') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('Draw')</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</li>
-
-				<li class="sidebar-menu-item sidebar-dropdown">
-					<a class="{{ menuActive('admin.earn.log*', 3) }}" href="javascript:void(0)">
-						<i class="menu-icon las la-dice"></i>
-						<span class="menu-title">@lang('Earn log')</span>
-					</a>
-					<div class="sidebar-submenu {{ menuActive('admin.earn.log*', 2) }}">
-						<ul>
-							<li class="sidebar-menu-item {{ menuActive('admin.earn.log.index') }}">
-								<a class="nav-link" href="{{ route('admin.earn.log.index') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('All')</span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item {{ menuActive('admin.earn.log.wining') }}">
-								<a class="nav-link" href="{{ route('admin.earn.log.wining') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('Wining')</span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item {{ menuActive('admin.earn.log.losing') }}">
-								<a class="nav-link" href="{{ route('admin.earn.log.losing') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('Losing')</span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item {{ menuActive('admin.earn.log.draw') }}">
-								<a class="nav-link" href="{{ route('admin.earn.log.draw') }}">
-									<i class="menu-icon las la-dot-circle"></i>
-									<span class="menu-title">@lang('Draw')</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</li>
 
 				<li class="sidebar-menu-item sidebar-dropdown">
 					<a class="{{ menuActive('admin.lockup.log*', 3) }}" href="javascript:void(0)">

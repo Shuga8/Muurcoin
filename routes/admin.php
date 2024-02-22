@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Admin')->name('admin.')->group(function () {
 
     Route::controller('AuthController')->prefix('auth')->group(function () {
-        Route::get('/', 'index')->name('login')->middleware('admin.guest');
+        Route::get('login', 'index')->name('login')->middleware('admin.guest');
         Route::post('/', 'auth')->name('login.auth')->middleware('admin.guest');
         // Logout function
         Route::get('logout', 'logout')->name('logout')->middleware('admin');
@@ -23,6 +23,7 @@ Route::namespace('Admin')->name('admin.')->group(function () {
             Route::get('/active', 'activeUsers')->name('active');
             Route::get('/unverified-email', 'unverifiedEmailUsers')->name('email.unverified');
             Route::get('/verified-email', 'verifiedEmailUsers')->name('email.verified');
+            Route::get('/banned', 'verifiedEmailUsers')->name('banned');
         });
     });
 });
