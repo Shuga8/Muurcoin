@@ -237,6 +237,49 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="userStatusModal" role="dialog" tabindex="-1">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						@if ($user->status == 'active')
+							<span>@lang('Ban User')</span>
+						@else
+							<span>@lang('Unban User')</span>
+						@endif
+					</h5>
+					<button class="close" data-bs-dismiss="modal" type="button" aria-label="Close">
+						<i class="las la-times"></i>
+					</button>
+				</div>
+				<form action="{{ route('admin.users.status', $user->id) }}" method="POST">
+					@csrf
+					<div class="modal-body">
+						@if ($user->status == 'active')
+							<h6 class="mb-2">@lang('If you ban this user he/she won\'t able to access his/her dashboard.')</h6>
+							<div class="form-group">
+								<label>@lang('Reason')</label>
+								<textarea class="form-control" name="reason" rows="4" required></textarea>
+							</div>
+						@else
+							<p><span>@lang('Ban reason was'):</span></p>
+							<p>{{ $user->ban_reason }}</p>
+							<h4 class="mt-3 text-center">@lang('Are you sure to unban this user?')</h4>
+						@endif
+					</div>
+					<div class="modal-footer">
+						@if ($user->status == 'active')
+							<button class="btn btn--primary h-45 w-100" type="submit">@lang('Submit')</button>
+						@else
+							<button class="btn btn--dark" data-bs-dismiss="modal" type="button">@lang('No')</button>
+							<button class="btn btn--primary" type="submit">@lang('Yes')</button>
+						@endif
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	@push('script')
 		<script>
 			(function($) {

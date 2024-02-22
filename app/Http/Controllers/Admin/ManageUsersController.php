@@ -189,6 +189,25 @@ class ManageUsersController extends Controller
         }
     }
 
+    public function status(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->status == 'active') {
+            $request->validate([
+                'reason' => 'required|string|max:255'
+            ]);
+            $user->status = 'banned';
+            $user->ban_reason = $request->reason;
+            $notify[] = ['success', 'User banned successfully'];
+        } else {
+            $user->status = 'active';
+            $user->ban_reason = null;
+            $notify[] = ['success', 'User unbanned successfully'];
+        }
+        $user->save();
+        return back()->withNotify($notify);
+    }
+
     public function checkIfSymbolExists($symbol, $user)
     {
         $balance = $user->balance;

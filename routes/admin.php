@@ -27,6 +27,7 @@ Route::namespace('Admin')->name('admin.')->group(function () {
 
             Route::get('detail/{id}', 'detail')->name('detail');
 
+            Route::post('status/{id}', 'status')->name('status');
             Route::post('update/{id}', 'update')->name('update');
             Route::post('add-sub-balance/{id}', 'addSubBalance')->name('add.sub.balance');
         });
