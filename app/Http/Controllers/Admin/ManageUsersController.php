@@ -38,4 +38,14 @@ class ManageUsersController extends Controller
         }
         return $users->searchable(['username', 'email'])->orderBy('id', 'desc')->paginate(getPaginate());
     }
+
+    public function bannedUsers()
+    {
+        $data = [
+            'title' => 'Banned Users',
+            'users' => $this->userData('banned')
+        ];
+
+        return view('admin.users.list')->with($data);
+    }
 }

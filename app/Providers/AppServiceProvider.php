@@ -21,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        $viewShare['emptyMessage'] = 'Data not found';
+        view()->share($viewShare);
+
         view()->composer('admin.partials.sidenav', function ($view) {
             $view->with([
                 'bannedUsersCount'  => User::banned()->count(),
