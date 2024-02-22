@@ -77,3 +77,8 @@ function getTrx($length = 12)
     }
     return $randomString;
 }
+
+function paginateLinks($data)
+{
+    return $data->appends(request()->all())->links();
+}
