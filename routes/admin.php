@@ -32,7 +32,7 @@ Route::namespace('Admin')->name('admin.')->group(function () {
         });
 
         Route::controller('ReportController')->name('report.')->prefix('report')->group(function () {
-            Route::get('transaction', 'transaction')->name('transaction');
+            Route::get('transaction/{id}', 'transaction')->name('transaction');
         });
 
         Route::controller('DepositController')->name('deposit.')->prefix('deposit')->group(function () {

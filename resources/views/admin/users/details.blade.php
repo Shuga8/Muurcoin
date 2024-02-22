@@ -25,8 +25,7 @@
 							</h3>
 							<p class="text-white">@lang('Balance')</p>
 						</div>
-						<a class="widget-two__btn"
-							href="{{ route('admin.report.transaction') }}?search={{ $user->username }}">@lang('View All')</a>
+						<a class="widget-two__btn" href="{{ route('admin.report.transaction', $user->id) }}">@lang('View All')</a>
 					</div>
 				</div>
 				<div class="col-xxl-3 col-sm-6">
@@ -63,8 +62,7 @@
 							<h3 class="text-white">{{ $widget['total_transaction'] }}</h3>
 							<p class="text-white">@lang('Transactions')</p>
 						</div>
-						<a class="widget-two__btn"
-							href="{{ route('admin.report.transaction') }}?search={{ $user->username }}">@lang('View All')</a>
+						<a class="widget-two__btn" href="{{ route('admin.report.transaction', $user->id) }}">@lang('View All')</a>
 					</div>
 				</div>
 			</div>
