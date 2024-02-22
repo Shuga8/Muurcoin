@@ -89,7 +89,29 @@ class ManageUsersController extends Controller
             'widget' => $widget,
         ];
 
+
         return view('admin.users.details')->with($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'firstname' => 'required|string|max:40',
+            'lastname' => 'required|string|max:40',
+            'email' => 'required|email|string|max:40|unique:users,email,' . $user->id,
+            'mobile' => 'required|string|max:40|unique:users,mobile,' . $user->id,
+        ]);
+        $user->mobile = $request->mobile;
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+
+        $user->save();
+
+        $notify[] = ['success', 'User details updated successfully'];
+        return back()->withNotify($notify);
     }
 
     public function addSubBalance(Request $request, $id)
