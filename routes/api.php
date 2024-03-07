@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum', 'verified', 'status')->group(function () {
     });
     Route::prefix('/crypto')->name('api.crypto.')->group(function () {
         Route::get('/', [CryptoController::class, 'index'])->name('index');
+        Route::get('/coinmarketcap', [CryptoController::class, 'coinmarket'])->name('coinmarket');
     });
     Route::prefix('/deposit')->name('api.deposit.')->group(function () {
         Route::post('/', [DepositController::class, 'achieve'])->name('achieve');
