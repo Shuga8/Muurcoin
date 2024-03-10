@@ -3,13 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CoinsController;
 use App\Http\Controllers\CryptoController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ExchangeController;
-use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransferController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\WithdrawalRequestsController;
 
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -55,5 +56,9 @@ Route::middleware('auth:sanctum', 'verified', 'status')->group(function () {
 
     Route::prefix('transfer')->name('api.transfer.')->group(function () {
         Route::post('/achieve', [TransferController::class, 'achieve'])->name('achieve');
+    });
+
+    Route::prefix('withdrawal')->name('api.withdrawal.')->group(function () {
+        Route::post('/place', [WithdrawalRequestsController::class, 'place'])->name('place');
     });
 });
