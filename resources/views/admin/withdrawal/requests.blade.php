@@ -9,6 +9,9 @@
 								<th>@lang('User')</th>
 								<th>@lang('Amount')</th>
 								<th>@lang('Wallet')</th>
+								<th>@lang('Account number')</th>
+								<th>@lang('Account name')</th>
+								<th>@lang('Bank name')</th>
 								<th>@lang('Status')</th>
 								<th>@lang('Created at')</th>
 								<th>@lang('Action')</th>
@@ -21,6 +24,9 @@
 										<td>{{ $user->username }}</td>
 										<td>{{ $withdrawal->amount }}</td>
 										<td>{{ $withdrawal->wallet }}</td>
+										<td>{{ $withdrawal->acc_number }}</td>
+										<td>{{ $withdrawal->acc_name }}</td>
+										<td>{{ $withdrawal->bank_name }}</td>
 										<td>{{ $withdrawal->status }}</td>
 										<td>
 											{{ showDateTime($withdrawal->created_at) }} <br> {{ diffForHumans($withdrawal->created_at) }}

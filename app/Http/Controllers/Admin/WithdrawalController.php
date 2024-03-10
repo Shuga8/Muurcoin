@@ -36,8 +36,16 @@ class WithdrawalController extends Controller
         return view('admin.withdrawal.requests')->with($data);
     }
 
-    public function update(int $id)
+    public function update(Request $request, int $id)
     {
         $withdrawal = WithdrawalRequest::findOrFail($id);
+
+        $withdrawal->status = $request->status;
+
+        $withdrawal->save();
+
+        $notify[] = ['success', 'status updated successfully'];
+
+        return back()->withNotify($notify);
     }
 }
