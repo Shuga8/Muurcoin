@@ -25,7 +25,23 @@
 										<td>
 											{{ showDateTime($withdrawal->created_at) }} <br> {{ diffForHumans($withdrawal->created_at) }}
 										</td>
-										<td></td>
+										<td>
+											<form action="{{ route('admin.withdraw.update', $withdrawal->id) }}" method="POST">
+												@csrf
+												@method('PUT')
+												<input name="status" type="hidden" value="completed">
+												<button class="btn-success text-whiten p-2">Accept</button>
+											</form>
+
+											<br>
+
+											<form action="{{ route('admin.withdraw.update', $withdrawal->id) }}" method="POST">
+												@csrf
+												@method('PUT')
+												<input name="status" type="hidden" value="failed">
+												<button class="btn-danger text-whiten p-2">Decline</button>
+											</form>
+										</td>
 									</tr>
 								@endforeach
 							@else

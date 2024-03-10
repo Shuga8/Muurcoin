@@ -35,4 +35,9 @@ class WithdrawalController extends Controller
 
         return view('admin.withdrawal.requests')->with($data);
     }
+
+    public function update(int $id)
+    {
+        $withdrawal = WithdrawalRequest::findOrFail($id);
+    }
 }
