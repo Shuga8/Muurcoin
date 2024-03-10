@@ -59,6 +59,7 @@ Route::middleware('auth:sanctum', 'verified', 'status')->group(function () {
     });
 
     Route::prefix('withdrawal')->name('api.withdrawal.')->group(function () {
+        Route::get('all', [WithdrawalRequestsController::class, 'all'])->name('all');
         Route::post('/place', [WithdrawalRequestsController::class, 'place'])->name('place');
     });
 });

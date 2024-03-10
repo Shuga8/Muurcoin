@@ -13,6 +13,14 @@ class WithdrawalRequestsController extends Controller
 {
 
     use HttpResponses;
+
+    public function index()
+    {
+
+        $withdrawals = Withdrawal::where('user_id', auth()->user()->id)->latest()->paginate();
+
+        return $this->success($withdrawals);
+    }
     public function place(WithdrawalRequest $request)
     {
 
