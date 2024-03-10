@@ -82,6 +82,13 @@
 				</div>
 
 				<div class="flex-fill">
+					<a class="btn btn--info btn--shadow w-100 btn-lg" href="{{ route('admin.withdraw.requests', $user->id) }}">
+						<i class="fas fa-wallet"></i> @lang('Withdrawal Requests')
+					</a>
+				</div>
+
+
+				<div class="flex-fill">
 					@if ($user->status == 'active')
 						<button class="btn btn--warning btn--gradi btn--shadow w-100 btn-lg userStatus" data-bs-toggle="modal"
 							data-bs-target="#userStatusModal" type="button">

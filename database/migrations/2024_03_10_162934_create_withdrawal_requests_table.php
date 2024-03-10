@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('acc_name');
             $table->string('bank_name');
             $table->string('status')->default('pending');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
