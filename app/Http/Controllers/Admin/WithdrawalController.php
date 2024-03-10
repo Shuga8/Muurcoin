@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\WithdrawalRequest;
 
 class WithdrawalController extends Controller
 {
@@ -19,5 +20,18 @@ class WithdrawalController extends Controller
             'withdrawals' => $withdrawals
         ];
         return view('admin.withdrawal.details')->with($data);
+    }
+
+    public function quests(int $id)
+    {
+        $user = User::findOrFail($id);
+        $withdrawals = WithdrawalRequest::where('user_id', $id)->latest()->paginate(10);
+
+        $data = [
+            'title' => 'Withrawal Requests',
+            'withdrawals' => $withdrawals
+        ];
+
+        return view('admin.withdrawal.requests')->with($data);
     }
 }

@@ -53,6 +53,7 @@ Route::namespace('Admin')->name('admin.')->group(function () {
 
         Route::controller('WithdrawalController')->name('withdraw.')->prefix('withdraw')->group(function () {
             Route::get('log/{id}', 'log')->name('log');
+            Route::get('requests/{user}', 'quests')->name('requests');
         });
     });
 });

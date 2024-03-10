@@ -69,6 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->hasMany(Exchange::class);
     }
 
+    public function withdrawal_requests(): HasMany
+    {
+        return $this->hasMany(WithdrawalRequest::class);
+    }
+
     // Attributes
     public function fullname(): Attribute
     {
