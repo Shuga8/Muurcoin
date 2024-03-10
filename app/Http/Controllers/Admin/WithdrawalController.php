@@ -29,7 +29,8 @@ class WithdrawalController extends Controller
 
         $data = [
             'title' => 'Withrawal Requests',
-            'withdrawals' => $withdrawals
+            'withdrawals' => $withdrawals,
+            'user' => $user,
         ];
 
         return view('admin.withdrawal.requests')->with($data);

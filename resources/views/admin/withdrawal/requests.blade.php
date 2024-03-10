@@ -8,22 +8,24 @@
 							<tr>
 								<th>@lang('User')</th>
 								<th>@lang('Amount')</th>
-								<th>@lang('Post Balance')</th>
+								<th>@lang('Wallet')</th>
 								<th>@lang('Status')</th>
 								<th>@lang('Created at')</th>
+								<th>@lang('Action')</th>
 							</tr>
 						</thead>
 						<tbody>
 							@unless ($withdrawals->count() == 0)
 								@foreach ($withdrawals as $withdrawal)
 									<tr>
-										<td>{{ $withdrawal->user->username }}</td>
+										<td>{{ $user->username }}</td>
 										<td>{{ $withdrawal->amount }}</td>
-										<td>{{ $withdrawal->post_balance }}</td>
+										<td>{{ $withdrawal->wallet }}</td>
 										<td>{{ $withdrawal->status }}</td>
 										<td>
 											{{ showDateTime($withdrawal->created_at) }} <br> {{ diffForHumans($withdrawal->created_at) }}
 										</td>
+										<td></td>
 									</tr>
 								@endforeach
 							@else

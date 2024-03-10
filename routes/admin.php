@@ -50,10 +50,10 @@ Route::namespace('Admin')->name('admin.')->group(function () {
             Route::get('details/{id}', 'details')->name('list');
         });
 
-
         Route::controller('WithdrawalController')->name('withdraw.')->prefix('withdraw')->group(function () {
             Route::get('log/{id}', 'log')->name('log');
             Route::get('requests/{user}', 'quests')->name('requests');
+            Route::put('status-update/{request}', 'update')->name('update');
         });
     });
 });
