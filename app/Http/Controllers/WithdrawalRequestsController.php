@@ -44,7 +44,7 @@ class WithdrawalRequestsController extends Controller
 
         $balance = json_decode($user->balance, true);
 
-        if ($data['amount'] < $balance[$data['wallet']]) {
+        if ($data['amount'] > $balance[$data['wallet']]) {
             return $this->error(null, 'Insufficient balance.', 406);
         }
         try {
