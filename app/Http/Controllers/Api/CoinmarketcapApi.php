@@ -10,7 +10,7 @@ class CoinmarketcapApi extends Controller
 
     public function __construct()
     {
-        $this->key = "2a8e45fd-d23d-4cac-8c6f-36929f77090e";
+        $this->key = "6567ef3d-f3e6-49f7-8d47-a17e0574d7f0";
     }
 
     public function fetchSymbolPriceUsd($symbol)
